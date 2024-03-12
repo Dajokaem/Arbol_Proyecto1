@@ -2,6 +2,7 @@ package Logica;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class Expresion {
 
@@ -10,7 +11,8 @@ public class Expresion {
     public int mitad;
     private final String[] operaciones = new String[]{"+", "-", "/", "*"};
     public List<Integer> posiciones = new ArrayList<Integer>();
-
+    
+    int indice;
     public Expresion() {
     }
 
@@ -111,5 +113,7 @@ public class Expresion {
     public void setExpre(String exp) {
         this.expre = exp;
     }
+
+    
 
 }
