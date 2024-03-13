@@ -19,20 +19,31 @@ public class Arbol {
         exp.Contar();
         Decifrador dec = new Decifrador();
         dec.setDescompuesta(exp);
+       
         dec.Decifrar(exp.getExpre());
+       
+        String nada = "";
+        for(String i:dec.descompuesta){
+            nada = nada+i;
+            System.out.println(nada);
+        }
         Queue<Operacion> ops = dec.getOpes();
         Operacion temp = new Operacion();
     
         
-        System.out.println(dec.descompuesta.get(0));
-        
+       nada = "";
+        /*
         do {
             temp = ops.poll();
-            String i = temp.nombre;
+            String i = temp.valor;
             System.out.println("operacion: ");
             System.out.println(i);
 
-        }while(true);
+        }while(temp!=null);*/
+        for(String i:dec.descompuesta){
+            nada = nada+i;
+            System.out.println(nada);
+        }
       
     }
 }
