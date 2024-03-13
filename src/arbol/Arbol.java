@@ -42,8 +42,8 @@ public class Arbol {
         }while(temp!=null);*/
         for(String i:dec.descompuesta){
             nada = nada+i;
-            System.out.println(nada);
+            
         }
-      
+      System.out.println(nada);
     }
 }

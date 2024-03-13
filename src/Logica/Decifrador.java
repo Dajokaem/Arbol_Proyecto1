@@ -12,6 +12,7 @@ public class Decifrador {
     String abecedario = "abcdefghijklmnopqrstuvwxyz";
     String[] variables = abecedario.split("");
     int varind = 0;
+    int contrecursion = 0;
 
     public Decifrador() {
     }
@@ -45,42 +46,45 @@ public class Decifrador {
                 SumaResta(i);
             }*/
             i++;
-        } while (descompuesta.size()>3);
+        } while (descompuesta.size() > 3);
     }
 
     public void Parentesis(int indice) {
         String parte = "", algo = "";
         int j;
+        contrecursion++;
+        System.out.println(contrecursion + "°");
         for (int nada = indice; nada < descompuesta.size(); nada++) {
             algo = algo + descompuesta.get(nada);
         }
         System.out.println("Formula: " + " " + algo);
         for (j = indice + 1; j < descompuesta.size(); j++) {
             parte = "";
-            System.out.println("inicio algoritmo");
+            //System.out.println("inicio algoritmo");
             if (descompuesta.get(j).equals("(")) {
-                System.out.println("recursion");
+               // System.out.println("recursion");
                 Parentesis(j);
+                //System.out.println("final recursion");
 
             } else {
-                System.out.println("final recursion");
-                System.out.println(j);
+
+                //System.out.println(j);
                 if (descompuesta.get(j).equals(")")) {
                     int k = j - (indice + 1);
 
                     if (k > 4) {
                         //Parentesis tipo (a+b....+n)
                     } else {
-                        System.out.println("Separacion");
-                        
+                        //System.out.println("Separacion");
+
                         if (k == 3) {
-                            System.out.println("Parentesis comun");
+                            //System.out.println("Parentesis comun");
                             for (int l = indice + 1; l < j; l++) {
 
                                 parte = parte + descompuesta.remove(indice + 1);
 
                             }
-                            System.out.println(parte);
+                            //System.out.println(parte);
                             Operacion op = new Operacion();
 
                             op.setNombre(variables[varind]);
@@ -88,37 +92,45 @@ public class Decifrador {
                             this.varind++;
                             opes.add(op);
                             descompuesta.add(indice + 1, op.nombre);
-                            
+
                             //formula
                             for (int nada = indice; nada < descompuesta.size() - 1; nada++) {
                                 algo = algo + descompuesta.get(nada);
                             }
                             Parentesis(0);
+                            //System.out.println("final recursion");
                         } else {
                             //Remover parentesis de formas (a) => a
                             if (k == 1) {
 
-                                System.out.println("Remover (a)");
-                                System.out.println(j);
-                                if (indice != 0) {
+                                //System.out.println("Remover (a)");
+                                //System.out.println(j);
+                                //System.out.println(descompuesta.size());
+                                if ((indice != 0) && (j != descompuesta.size()-1)) {
+                                    //System.out.println(contrecursion + "°");
+                                    algo = "";
+                                    for (int nada = 0; nada < descompuesta.size(); nada++) {
+                                        algo = algo + descompuesta.get(nada);
+                                    }
+                                    System.out.println("Formula: " + " " + algo);
+                                   // System.out.println(descompuesta.size());
                                     descompuesta.remove(indice - 1);
                                     descompuesta.remove(indice + 1);
 
-                                    
                                     //formula
-                                    for (int nada = indice; nada < descompuesta.size() - 1; nada++) {
-                                        algo = algo + descompuesta.get(nada);
-                                    }
                                     Parentesis(0);
-                                }else{
+                                    //System.out.println("final recursion");
+                                } else {
+                                    //System.out.println("Remover (b)");
                                     descompuesta.remove(indice);
                                     descompuesta.remove(indice + 1);
-                                    
+
                                     //formula
                                     for (int nada = indice; nada < descompuesta.size() - 1; nada++) {
                                         algo = algo + descompuesta.get(nada);
                                     }
                                     Parentesis(0);
+                                    System.out.println("final recursion");
                                 }
                             }
                             //Multiplicaciones del tipo b(a)
@@ -128,12 +140,12 @@ public class Decifrador {
                 }
             }
         }
-        System.out.println("final Decifrar");
-        algo="";
+       //System.out.println("final Decifrar");
+        algo = "";
         for (int nada = 0; nada < descompuesta.size(); nada++) {
             algo = algo + descompuesta.get(nada);
         }
-        System.out.println("Formula: " + " " + algo);
+        //System.out.println("Formula: " + " " + algo);
 
     }
 
