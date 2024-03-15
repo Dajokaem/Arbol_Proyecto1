@@ -17,8 +17,11 @@ public class Calculadora {
     }
     public double Calcular(){
         Operacion op = new Operacion();
+        String valor = "";
         do{
             op = Operaciones.poll();
+            valor = op.getValor();
+            
         }while(!Operaciones.isEmpty());
         return resultado;
     }
