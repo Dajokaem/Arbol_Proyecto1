@@ -14,13 +14,14 @@ public class Arbol {
     public static void main(String[] args) {
         Scanner leer = new Scanner(System.in);
         Expresion exp = new Expresion();
-        
-        exp.setExpre("((5+3)/2)+((1-5)*2)");
+        String a = "((5+3)/2)+((1-5)*2)";
+        String b = "(5+4*(7-6*8)/2)+(4*(9-8)/4)";
+        exp.setExpre(b);
         exp.Contar();
         Decifrador dec = new Decifrador();
         dec.setDescompuesta(exp);
        
-        dec.Decifrar(exp.getExpre());
+        dec.Decifrar();
        
         String nada = "";
         for(String i:dec.descompuesta){
