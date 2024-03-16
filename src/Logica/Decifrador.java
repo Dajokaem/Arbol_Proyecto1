@@ -220,13 +220,7 @@ public class Decifrador {
                 }
             }
         }
-        //System.out.println("final Decifrar");
-        algo = "";
-        for (int nada = 0; nada < descompuesta.size(); nada++) {
-            algo = algo + descompuesta.get(nada);
-        }
-        //System.out.println("Formula: " + " " + algo);
-
+        
     }
 
     private void MultiDiv(int indice) {
