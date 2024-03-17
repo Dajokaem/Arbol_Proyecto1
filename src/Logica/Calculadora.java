@@ -12,19 +12,43 @@ public class Calculadora {
     String[] numeros = nums.split("");
     String abecedario = "abcdefghijklmnopqrstuvwxyz";
     String[] variables = abecedario.split("");
+    String[] formulaGeneral;
 
     public Calculadora() {
     }
 
-    public void setOperaciones(Queue<Operacion> opes) {
+    public void setOperaciones(Queue<Operacion> opes, String formulaGeneral) {
         this.Operaciones = opes;
+        this.formulaGeneral = formulaGeneral.split("");
 
+    }
+
+    public void setFormulaGeneral(String formulaGeneral) {
+        this.formulaGeneral = formulaGeneral.split("");
     }
 
     public double Calcular() {
         double resultado = 0;
+        Separador();
 
-        return 0;
+        double resIzq = CalcularIzq();
+        double resDer = CalcularDer();
+        switch (formulaGeneral[1]) {
+            case "*":
+                resultado = resultado + (resIzq * resDer);
+                break;
+            case "/":
+                resultado = resultado + (resIzq / resDer);
+                break;
+            case "+":
+                resultado = resultado + (resIzq + resDer);
+                break;
+            case "-":
+                resultado = resultado + (resIzq - resDer);
+                break;
+        }
+
+        return resultado;
     }
 
     public double CalcularDer() {
@@ -32,19 +56,25 @@ public class Calculadora {
         double res = 0;
         String formula[];
         do {
+           
             formula = derOperaciones.poll().getValor().split("");
-            do {
+
+            for (i = 0; i < abecedario.length(); i++) {
+
                 if (variables[i].equals(formula[0])) {
                     k = 10;
+                    break;
                 }
                 if (variables[i].equals(formula[2])) {
                     k = 1;
+                    break;
                 }
-                if (i == abecedario.length()) {
+                if (i == abecedario.length() - 1) {
                     k = 20;
+                    break;
                 }
-                i++;
-            } while (k == 0);
+
+            }
 
             switch (k) {
                 case 10:
@@ -107,9 +137,9 @@ public class Calculadora {
                     break;
             }
 
-        } while (!izqOperaciones.isEmpty());
+        } while (derOperaciones.size() > 1);
         return res;
-        
+
     }
 
     public double CalcularIzq() {
@@ -117,19 +147,25 @@ public class Calculadora {
         double res = 0;
         String formula[];
         do {
+            
             formula = izqOperaciones.poll().getValor().split("");
-            do {
+
+            for (i = 0; i < abecedario.length(); i++) {
+
                 if (variables[i].equals(formula[0])) {
                     k = 10;
+                    break;
                 }
                 if (variables[i].equals(formula[2])) {
                     k = 1;
+                    break;
                 }
-                if (i == abecedario.length()) {
+                if (i == abecedario.length() - 1) {
                     k = 20;
+                    break;
                 }
-                i++;
-            } while (k == 0);
+
+            }
 
             switch (k) {
                 case 10:
@@ -199,17 +235,22 @@ public class Calculadora {
     public void Separador() {
         int finIzq = 0, i = 0;
         int finDer = 0;
-        String[] formula = Operaciones.peek().getValor().split("");
+        String[] formula = this.formulaGeneral;
         for (Operacion temp : Operaciones) {
+
+            
             if (temp.getNombre().equals(formula[0])) {
+
                 finIzq = i;
+                break;
             }
             i++;
         }
         for (int j = 0; j < finIzq + 1; j++) {
             izqOperaciones.add(Operaciones.poll());
         }
-        derOperaciones=Operaciones;
-        
+        while (!Operaciones.isEmpty()) {
+            derOperaciones.add(Operaciones.poll());
+        }
     }
 }
