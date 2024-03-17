@@ -1,13 +1,16 @@
 package arbol;
 
+import Logica.ArbolExpresion;
 import Logica.Calculadora;
 import Logica.Decifrador;
 import Logica.Expresion;
 import Logica.Operacion;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 
 /*Por ahora solo soporta las cuatro operaciones basicas, no soportara potencias o raices, por ahora
 Ademas de requerir expresar la multiplicacion de manera explicita, tal como: 4(5) como 4*(5), 
@@ -21,13 +24,16 @@ public class Arbol {
         Expresion exp = new Expresion();
         Calculadora calc = new Calculadora();        
         Decifrador dec = new Decifrador();
-        
-        
-        calc.setOperaciones(dec.getOpes(), dec.getUltima());
-        double m = calc.Calcular();
-        System.out.println(m);
-         
-        
+        ArbolExpresion arbol = new ArbolExpresion();
+        System.out.println("Dame la expresion a Evaluar");
+        String operacion = leer.next();
+        exp.setExpre(operacion);
+        dec.setDescompuesta(exp);
+        dec.Decifrar();
+        calc.setOperaciones(dec.getOpes());
+        double resultado = calc.Calcular();
+        System.out.println("El resultado es: "+resultado);
+       
 
     }
 }

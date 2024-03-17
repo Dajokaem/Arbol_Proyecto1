@@ -1,6 +1,8 @@
 package Logica;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class Calculadora {
@@ -17,9 +19,17 @@ public class Calculadora {
     public Calculadora() {
     }
 
-    public void setOperaciones(Queue<Operacion> opes, String formulaGeneral) {
+    public void setOperaciones(Queue<Operacion> opes) {
         this.Operaciones = opes;
-        this.formulaGeneral = formulaGeneral.split("");
+        Queue<Operacion> Paralelo = new LinkedList<Operacion>();
+        Paralelo = opes;
+        List<Operacion> temp = new ArrayList<Operacion>();
+        for (Operacion op : Paralelo) {
+
+            temp.add(op);
+        }
+
+        this.formulaGeneral = temp.get(temp.size() - 1).getValor().split("");
 
     }
 
@@ -33,22 +43,40 @@ public class Calculadora {
 
         double resIzq = CalcularIzq();
         double resDer = CalcularDer();
-        switch (formulaGeneral[1]) {
-            case "*":
-                resultado = resultado + (resIzq * resDer);
-                break;
-            case "/":
-                resultado = resultado + (resIzq / resDer);
-                break;
-            case "+":
-                resultado = resultado + (resIzq + resDer);
-                break;
-            case "-":
-                resultado = resultado + (resIzq - resDer);
-                break;
-        }
+        if (Operaciones.isEmpty()) {
+            switch (formulaGeneral[1]) {
+                case "*":
+                    resultado = resultado + (resIzq * resDer);
+                    break;
+                case "/":
+                    resultado = resultado + (resIzq / resDer);
+                    break;
+                case "+":
+                    resultado = resultado + (resIzq + resDer);
+                    break;
+                case "-":
+                    resultado = resultado + (resIzq - resDer);
+                    break;
+            }
 
-        return resultado;
+            return resultado;
+        } else {
+            switch (formulaGeneral[1]) {
+                case "*":
+                    resultado = resultado + (resIzq * Double.parseDouble(formulaGeneral[2]));
+                    break;
+                case "/":
+                    resultado = resultado + (resIzq / Double.parseDouble(formulaGeneral[2]));
+                    break;
+                case "+":
+                    resultado = resultado + (resIzq + Double.parseDouble(formulaGeneral[2]));
+                    break;
+                case "-":
+                    resultado = resultado + (resIzq - Double.parseDouble(formulaGeneral[2]));
+                    break;
+            }
+            return resultado;
+        }
     }
 
     public double CalcularDer() {
@@ -56,9 +84,11 @@ public class Calculadora {
         double res = 0;
         String formula[];
         do {
-           
-            formula = derOperaciones.poll().getValor().split("");
-
+            try {
+                formula = derOperaciones.poll().getValor().split("");
+            } catch (Exception ex) {
+                return 0;
+            }
             for (i = 0; i < abecedario.length(); i++) {
 
                 if (variables[i].equals(formula[0])) {
@@ -147,7 +177,7 @@ public class Calculadora {
         double res = 0;
         String formula[];
         do {
-            
+
             formula = izqOperaciones.poll().getValor().split("");
 
             for (i = 0; i < abecedario.length(); i++) {
@@ -238,7 +268,6 @@ public class Calculadora {
         String[] formula = this.formulaGeneral;
         for (Operacion temp : Operaciones) {
 
-            
             if (temp.getNombre().equals(formula[0])) {
 
                 finIzq = i;
@@ -249,8 +278,10 @@ public class Calculadora {
         for (int j = 0; j < finIzq + 1; j++) {
             izqOperaciones.add(Operaciones.poll());
         }
-        while (!Operaciones.isEmpty()) {
-            derOperaciones.add(Operaciones.poll());
+        if (Operaciones.size() != 1) {
+            while (!Operaciones.isEmpty()) {
+                derOperaciones.add(Operaciones.poll());
+            }
         }
     }
 }

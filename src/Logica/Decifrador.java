@@ -50,14 +50,18 @@ public class Decifrador {
             }
             i++;
         } while (descompuesta.size() > 3);
-        parte = parte + descompuesta.remove(0);
-        parte = parte + descompuesta.remove(0);
-        parte = parte + descompuesta.remove(0);
-        Operacion op = new Operacion();
-        op.setNombre(variables[varind]);
-        op.setValor(parte);
-        opes.add(op);
-        this.ultima = op.getValor();
+        try{
+            parte = parte + descompuesta.remove(0);
+            parte = parte + descompuesta.remove(0);
+            parte = parte + descompuesta.remove(0);
+            Operacion op = new Operacion();
+            op.setNombre(variables[varind]);
+            op.setValor(parte);
+            opes.add(op);
+            this.ultima = op.getValor();
+        }catch(Exception ex){
+            
+        }
     }
 
     public String Decifrar(String expresion) {
@@ -80,7 +84,7 @@ public class Decifrador {
                         op.setValor(parte);
                         varind++;
                         subdescompuesta.add(i - 1, op.getNombre());
-                        
+
                         opes.add(op);
                         i = 0;
                         parte = "";
@@ -93,7 +97,7 @@ public class Decifrador {
                         op.setValor(parte);
                         varind++;
                         subdescompuesta.add(i - 1, op.getNombre());
-                        
+
                         opes.add(op);
                         i = 0;
                         parte = "";
@@ -111,7 +115,7 @@ public class Decifrador {
                         op.setValor(parte);
                         varind++;
                         subdescompuesta.add(i - 1, op.getNombre());
-                       
+
                         opes.add(op);
                         i = 0;
                         parte = "";
@@ -124,7 +128,7 @@ public class Decifrador {
                         op.setValor(parte);
                         varind++;
                         subdescompuesta.add(i - 1, op.getNombre());
-                        
+
                         opes.add(op);
                         i = 0;
                         parte = "";
@@ -152,7 +156,6 @@ public class Decifrador {
 
                 if (descompuesta.get(j).equals(")")) {
                     int k = j - (indice + 1);//Contenido del Parentesis
-                    
 
                     if (k > 3) {//Parentesis (a+b+c)
 
@@ -162,7 +165,7 @@ public class Decifrador {
                         }
 
                         parte = Decifrar(tempParte);
-                        
+
                         descompuesta.add(indice + 1, parte);
                         Parentesis(0);
                     } else {
@@ -174,13 +177,13 @@ public class Decifrador {
                                 parte = parte + descompuesta.remove(indice + 1);
 
                             }
-                            
+
                             Operacion op = new Operacion();
 
                             op.setNombre(variables[varind]);
                             op.setValor(parte);
                             this.varind++;
-                            
+
                             opes.add(op);
                             descompuesta.add(indice + 1, op.nombre);
 
@@ -201,7 +204,7 @@ public class Decifrador {
                                     Parentesis(0);
 
                                 } else {
-                                   
+
                                     descompuesta.remove(indice);
                                     descompuesta.remove(indice + 1);
 
@@ -231,7 +234,7 @@ public class Decifrador {
             op.setValor(parte);
             varind++;
             descompuesta.add(i - 1, op.getNombre());
-            
+
             opes.add(op);
 
             parte = "";
@@ -244,7 +247,7 @@ public class Decifrador {
             op.setValor(parte);
             varind++;
             descompuesta.add(i - 1, op.getNombre());
-           
+
             opes.add(op);
 
             parte = "";
@@ -263,7 +266,7 @@ public class Decifrador {
             op.setValor(parte);
             varind++;
             descompuesta.add(i - 1, op.getNombre());
-            
+
             opes.add(op);
 
             parte = "";
@@ -276,7 +279,7 @@ public class Decifrador {
             op.setValor(parte);
             varind++;
             descompuesta.add(i - 1, op.getNombre());
-            
+
             opes.add(op);
 
             parte = "";
